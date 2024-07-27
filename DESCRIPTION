@@ -1,12 +1,14 @@
 Package: halfedgedatastructr
-Title: What the Package Does (One Line, Title Case)
+Title: Provide a half-edge data structure for a convex polytope
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Jeff", "Lansing", , "lansing2357@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: A convex hull data structure is converted into a half-edge data
+  structure (he_ds). The he_ds provides operations cut and fold, which apply either
+  an outer (cut) or an inner (fold) spanning tree to the he_ds. See the vignettes
+  for details.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
