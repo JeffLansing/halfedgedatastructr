@@ -39,8 +39,6 @@ Vertex <- R6Class("Vertex", list(
   point = NULL,
   #' @field edge The half-edge that starts at this vertex.
   edge = NULL,
-  #' @field pair The perfect matching pair of this vertex.
-  pair = NULL,
   #' print
   #' render an identifier for this object
   #' @param ...
