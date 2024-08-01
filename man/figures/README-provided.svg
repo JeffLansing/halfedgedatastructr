@@ -1,0 +1,184 @@
+<svg version="1.1" baseProfile="full" width="914.0" height="354.0" viewBox="0 0 914 354" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+	<desc >[&lt;frame&gt;HalfEdgeDataStructure provided structure|
+	  [HalfEdgeDataStructure|
+	    - faces : face \[ 0..* \]
+	    - vertices : vertex \[ 0..* \]
+	    - half_edges : half_edge \[ 0..* \]
+	    - he_index : int \[\]\[\] 
+	    - he_face_index : int \[\]\[\]|
+	    initialize()
+	    cut()
+	    fold()
+	  ]
+	 [HalfEdge|
+	  	- id : int
+	    - vertices : int \[ 0..* \]
+	    - dir : int
+	    - vert = Vertex
+	    - pair = HalfEdge
+	    - face = Face
+	    - succ = HalfEdge
+	    - cut : bool|
+	    print()
+	  ]
+	   [Vertex|
+	  	- id : int
+	    - point : num \[ 3 \]
+	    - edge : HalfEdge |
+	    print()
+	  ]
+	  [Face|
+	    - normal : num \[ 3 \]
+	    - edge : HalfEdge
+	    - rot : int |
+	    print()
+	  ]
+	]
+	</desc>
+	<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+		<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+			<g stroke="transparent" fill="transparent">
+				<rect x="0.0" y="0.0" height="354.0" width="914.0" stroke="none"></rect>
+			</g>
+			<g transform="translate(8, 8)" fill="#33322E">
+				<g transform="translate(20, 20)">
+					<g data-name="HalfEdgeDataStructure provided structure">
+						<g fill="#eee8d5" stroke="#33322E" data-name="HalfEdgeDataStructure provided structure">
+							<rect x="0.0" y="0.0" height="298.0" width="858.0" data-name="HalfEdgeDataStructure provided structure"></rect>
+							<path d="M0.0 32.0 L329.0 32.0 L345.0 16.0 L345.0 0.0" fill="none" data-name="HalfEdgeDataStructure provided structure"></path>
+						</g>
+						<g transform="translate(0, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdgeDataStructure provided structure">
+							<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="HalfEdgeDataStructure provided structure">
+								<text x="0.0" y="14.1" stroke="none" data-name="HalfEdgeDataStructure provided structure">HalfEdgeDataStructure provided structure</text>
+								
+							</g>
+						</g>
+						<g transform="translate(0, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdgeDataStructure provided structure">
+							<g transform="translate(8, 8)" fill="#33322E" data-name="HalfEdgeDataStructure provided structure">
+								<g transform="translate(20, 20)" data-name="HalfEdgeDataStructure provided structure">
+									<g data-name="HalfEdgeDataStructure">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="HalfEdgeDataStructure">
+											<rect x="0.0" y="8.0" height="194.0" width="234.0" data-name="HalfEdgeDataStructure"></rect>
+											<path d="M0.0 40.0 L234.0 40.0" fill="none" data-name="HalfEdgeDataStructure"></path>
+											<path d="M0.0 137.0 L234.0 137.0" fill="none" data-name="HalfEdgeDataStructure"></path>
+										</g>
+										<g transform="translate(0, 8)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="HalfEdgeDataStructure">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="HalfEdgeDataStructure">
+												<text x="109.0" y="14.1" stroke="none" text-anchor="middle" data-name="HalfEdgeDataStructure">HalfEdgeDataStructure</text>
+												
+											</g>
+										</g>
+										<g transform="translate(0, 40)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdgeDataStructure">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="HalfEdgeDataStructure">
+												<text x="0.0" y="14.1" stroke="none" data-name="HalfEdgeDataStructure">- faces : face [ 0..* ]</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="HalfEdgeDataStructure">- vertices : vertex [ 0..* ]</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="HalfEdgeDataStructure">- half_edges : half_edge [ 0..* ]</text>
+												<text x="0.0" y="62.7" stroke="none" data-name="HalfEdgeDataStructure">- he_index : int [][]</text>
+												<text x="0.0" y="78.9" stroke="none" data-name="HalfEdgeDataStructure">- he_face_index : int [][]</text>
+												
+											</g>
+										</g>
+										<g transform="translate(0, 137)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdgeDataStructure">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="HalfEdgeDataStructure">
+												<text x="0.0" y="14.1" stroke="none" data-name="HalfEdgeDataStructure">initialize()</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="HalfEdgeDataStructure">cut()</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="HalfEdgeDataStructure">fold()</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="HalfEdge">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="HalfEdge">
+											<rect x="274.0" y="0.0" height="210.0" width="157.0" data-name="HalfEdge"></rect>
+											<path d="M274.0 32.0 L431.0 32.0" fill="none" data-name="HalfEdge"></path>
+											<path d="M274.0 178.0 L431.0 178.0" fill="none" data-name="HalfEdge"></path>
+										</g>
+										<g transform="translate(274, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="HalfEdge">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="HalfEdge">
+												<text x="70.5" y="14.1" stroke="none" text-anchor="middle" data-name="HalfEdge">HalfEdge</text>
+												
+											</g>
+										</g>
+										<g transform="translate(274, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdge">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="HalfEdge">
+												<text x="0.0" y="14.1" stroke="none" data-name="HalfEdge">- id : int</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="HalfEdge">- vertices : int [ 0..* ]</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="HalfEdge">- dir : int</text>
+												<text x="0.0" y="62.7" stroke="none" data-name="HalfEdge">- vert = Vertex</text>
+												<text x="0.0" y="78.9" stroke="none" data-name="HalfEdge">- pair = HalfEdge</text>
+												<text x="0.0" y="95.1" stroke="none" data-name="HalfEdge">- face = Face</text>
+												<text x="0.0" y="111.3" stroke="none" data-name="HalfEdge">- succ = HalfEdge</text>
+												<text x="0.0" y="127.5" stroke="none" data-name="HalfEdge">- cut : bool</text>
+												
+											</g>
+										</g>
+										<g transform="translate(274, 178)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdge">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="HalfEdge">
+												<text x="0.0" y="14.1" stroke="none" data-name="HalfEdge">print()</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="Vertex">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="Vertex">
+											<rect x="471.0" y="40.5" height="129.0" width="141.0" data-name="Vertex"></rect>
+											<path d="M471.0 72.5 L612.0 72.5" fill="none" data-name="Vertex"></path>
+											<path d="M471.0 137.5 L612.0 137.5" fill="none" data-name="Vertex"></path>
+										</g>
+										<g transform="translate(471, 40.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Vertex">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Vertex">
+												<text x="62.5" y="14.1" stroke="none" text-anchor="middle" data-name="Vertex">Vertex</text>
+												
+											</g>
+										</g>
+										<g transform="translate(471, 72.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Vertex">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Vertex">
+												<text x="0.0" y="14.1" stroke="none" data-name="Vertex">- id : int</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="Vertex">- point : num [ 3 ]</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="Vertex">- edge : HalfEdge</text>
+												
+											</g>
+										</g>
+										<g transform="translate(471, 137.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Vertex">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Vertex">
+												<text x="0.0" y="14.1" stroke="none" data-name="Vertex">print()</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="Face">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="Face">
+											<rect x="652.0" y="40.5" height="129.0" width="150.0" data-name="Face"></rect>
+											<path d="M652.0 72.5 L802.0 72.5" fill="none" data-name="Face"></path>
+											<path d="M652.0 137.5 L802.0 137.5" fill="none" data-name="Face"></path>
+										</g>
+										<g transform="translate(652, 40.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Face">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Face">
+												<text x="67.0" y="14.1" stroke="none" text-anchor="middle" data-name="Face">Face</text>
+												
+											</g>
+										</g>
+										<g transform="translate(652, 72.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Face">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Face">
+												<text x="0.0" y="14.1" stroke="none" data-name="Face">- normal : num [ 3 ]</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="Face">- edge : HalfEdge</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="Face">- rot : int</text>
+												
+											</g>
+										</g>
+										<g transform="translate(652, 137.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Face">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Face">
+												<text x="0.0" y="14.1" stroke="none" data-name="Face">print()</text>
+												
+											</g>
+										</g>
+									</g>
+								</g>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

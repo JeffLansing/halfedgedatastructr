@@ -15,7 +15,7 @@ This R implementation ingests information in the following form, which
 is a subset of the form produced by the cxhull::cxhull function
 (<https://cran.r-project.org/package=cxhull>):
 
-<img src="man/figures/README-required.png" width="80%" />
+<img src="man/figures/README-required.svg" width="90%" />
 
 An instance of this structure is the following tetetrahedron, using the
 coordinates from
@@ -49,7 +49,76 @@ tet <- list(
 
 This is converted into a half-edge data structure, which has the
 following form:
-<img src="man/figures/README-provided.png" width="80%" />
+<img src="man/figures/README-provided.svg" width="95%" />
+
+Here is an example, which lists the identifiers for the half-edges in
+the structure:
+
+``` r
+he_ds <- HalfEdgeDataStructure$new(tet)
+hes <- he_ds$half_edges
+unlist(lapply(1:length(hes), function(k) {
+  hes[[k]]$ix
+}))
+```
+
+    ##  [1] 103 301 203 302 102 201 304 403 104 401 204 402
+
+## Spanning Trees
+
+Generating spanning trees for polygons is a somewhat guarded art, and
+there doesn’t seem to be code for that in R. Fortunately
+[SAGE](https://doc.sagemath.org/html/en/reference/graphs/sage/graphs/spanning_tree.html#sage.graphs.spanning_tree.spanning_trees)
+provides help for this. The following SAGE code (easily extended to
+other polygons) generates all (and only) the spanning trees for the
+tetrahedron:
+
+``` python
+tet = graphs.TetrahedralGraph()
+tet.relabel({0:1, 1:2, 2:3, 3:4})
+tst = tet.spanning_trees()
+reps = []
+for i,t in enumerate(tst):
+    reps.append(t.graph6_string())
+print(*reps, sep = "', '")
+```
+
+The output of the code is this vector of 16 graph6-encoded trees:
+
+|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+| CF  | CL  | CM  | CR  | CX  | CY  | CU  | C\[ | Cb  | Ch  | Ci  | Cd  | Ck  | Cp  | Cq  | Cs  |
+
+which can be converted to the required adjacency matrix form, to then be
+used by the cut and fold operations:
+
+``` r
+adj_mats <- rgraph6::adjacency_from_graph6(trees)
+he_ds$cut <- adj_mats[[1]]
+
+hes <- he_ds$half_edges
+unlist(lapply(1:length(hes), function(k) {
+  ifelse(hes[[k]]$cut, hes[[k]]$ix, NA)
+}))
+```
+
+    ##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402
+
+``` r
+he_ds2 <- HalfEdgeDataStructure$new(tet)
+he_ds2$fold <- adj_mats[[16]]
+
+hes2 <- he_ds2$half_edges
+unlist(lapply(1:length(hes2), function(k) {
+  ifelse(hes2[[k]]$cut, hes2[[k]]$ix, NA)
+}))
+```
+
+    ##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402
+
+So cutting with tree 1 is the same as folding with tree 16.
+
+This duality will be explored further in one of the vignettes.
 
 ## Installation
 

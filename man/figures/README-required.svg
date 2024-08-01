@@ -1,0 +1,135 @@
+<svg version="1.1" baseProfile="full" width="866.0" height="257.0" viewBox="0 0 866 257" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+	<desc >
+	#title README-required.svg
+	[&lt;frame&gt;cxhull required structure|
+	  [cxhull|
+	  	- vertices : vertex \[ 0..* \]
+	  	- ridges : ridge \[ 0..* \]
+	    - facets : facet \[ 0..* \]
+	  ]
+	  [vertex|
+	  	- id : int
+	    - point : num \[ 3 \]
+	  ]
+	  [ridge|
+	  	- id : int
+	    - vertices : int \[ 0..* \]
+	  ]
+	  [facet|
+	    - normal : num \[ 3 \]
+	    - center : num \[ 3 \]
+	    - orientation : int
+	    - vertices : int \[ 0..* \]
+	  ]
+	]
+	
+	</desc>
+	<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+		<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+			<g stroke="transparent" fill="transparent">
+				<rect x="0.0" y="0.0" height="257.0" width="866.0" stroke="none"></rect>
+			</g>
+			<g transform="translate(8, 8)" fill="#33322E">
+				<g transform="translate(20, 20)">
+					<g data-name="cxhull required structure">
+						<g fill="#eee8d5" stroke="#33322E" data-name="cxhull required structure">
+							<rect x="0.0" y="0.0" height="201.0" width="810.0" data-name="cxhull required structure"></rect>
+							<path d="M0.0 32.0 L196.0 32.0 L212.0 16.0 L212.0 0.0" fill="none" data-name="cxhull required structure"></path>
+						</g>
+						<g transform="translate(0, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="cxhull required structure">
+							<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="cxhull required structure">
+								<text x="0.0" y="14.1" stroke="none" data-name="cxhull required structure">cxhull required structure</text>
+								
+							</g>
+						</g>
+						<g transform="translate(0, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="cxhull required structure">
+							<g transform="translate(8, 8)" fill="#33322E" data-name="cxhull required structure">
+								<g transform="translate(20, 20)" data-name="cxhull required structure">
+									<g data-name="cxhull">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="cxhull">
+											<rect x="0.0" y="8.0" height="97.0" width="184.0" data-name="cxhull"></rect>
+											<path d="M0.0 40.0 L184.0 40.0" fill="none" data-name="cxhull"></path>
+										</g>
+										<g transform="translate(0, 8)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="cxhull">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="cxhull">
+												<text x="84.0" y="14.1" stroke="none" text-anchor="middle" data-name="cxhull">cxhull</text>
+												
+											</g>
+										</g>
+										<g transform="translate(0, 40)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="cxhull">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="cxhull">
+												<text x="0.0" y="14.1" stroke="none" data-name="cxhull">- vertices : vertex [ 0..* ]</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="cxhull">- ridges : ridge [ 0..* ]</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="cxhull">- facets : facet [ 0..* ]</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="vertex">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="vertex">
+											<rect x="224.0" y="16.5" height="80.0" width="136.0" data-name="vertex"></rect>
+											<path d="M224.0 48.5 L360.0 48.5" fill="none" data-name="vertex"></path>
+										</g>
+										<g transform="translate(224, 16.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="vertex">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="vertex">
+												<text x="60.0" y="14.1" stroke="none" text-anchor="middle" data-name="vertex">vertex</text>
+												
+											</g>
+										</g>
+										<g transform="translate(224, 48.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="vertex">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="vertex">
+												<text x="0.0" y="14.1" stroke="none" data-name="vertex">- id : int</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="vertex">- point : num [ 3 ]</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="ridge">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="ridge">
+											<rect x="400.0" y="16.5" height="80.0" width="157.0" data-name="ridge"></rect>
+											<path d="M400.0 48.5 L557.0 48.5" fill="none" data-name="ridge"></path>
+										</g>
+										<g transform="translate(400, 16.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ridge">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ridge">
+												<text x="70.5" y="14.1" stroke="none" text-anchor="middle" data-name="ridge">ridge</text>
+												
+											</g>
+										</g>
+										<g transform="translate(400, 48.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ridge">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ridge">
+												<text x="0.0" y="14.1" stroke="none" data-name="ridge">- id : int</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="ridge">- vertices : int [ 0..* ]</text>
+												
+											</g>
+										</g>
+									</g>
+									<g data-name="facet">
+										<g fill="#fdf6e3" stroke="#33322E" data-name="facet">
+											<rect x="597.0" y="0.0" height="113.0" width="157.0" data-name="facet"></rect>
+											<path d="M597.0 32.0 L754.0 32.0" fill="none" data-name="facet"></path>
+										</g>
+										<g transform="translate(597, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="facet">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="facet">
+												<text x="70.5" y="14.1" stroke="none" text-anchor="middle" data-name="facet">facet</text>
+												
+											</g>
+										</g>
+										<g transform="translate(597, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="facet">
+											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="facet">
+												<text x="0.0" y="14.1" stroke="none" data-name="facet">- normal : num [ 3 ]</text>
+												<text x="0.0" y="30.3" stroke="none" data-name="facet">- center : num [ 3 ]</text>
+												<text x="0.0" y="46.5" stroke="none" data-name="facet">- orientation : int</text>
+												<text x="0.0" y="62.7" stroke="none" data-name="facet">- vertices : int [ 0..* ]</text>
+												
+											</g>
+										</g>
+									</g>
+								</g>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
