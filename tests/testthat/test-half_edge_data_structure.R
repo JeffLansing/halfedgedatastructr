@@ -51,6 +51,15 @@ test_that("fold works for cube", {
   expect_equal(vixs, c(8, 4, 3, 1, 5, 7, 5, 6, 2, 6, 5, 1, 3, 4))
 })
 
+test_that("face center has content", {
+  he_ds <- HalfEdgeDataStructure$new(cube)
+  tbl <- Reduce(rbind, lapply(1:6, function(k) {
+    face <- he_ds$faces[[k]]
+    face$center
+  }))
+  expect_equal(ncol(tbl), 3)
+})
+
 test_that("iterate_around_face works", {
   he_ds <- HalfEdgeDataStructure$new(cube)
   tbl <- Reduce(rbind, lapply(1:6, function(k) {

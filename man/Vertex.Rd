@@ -15,9 +15,7 @@ Vertex R6 Class
 
 \item{\code{point}}{The spatial location of this vertex: x,y,z coordinates.}
 
-\item{\code{edge}}{The half-edge that starts at this vertex.}
-
-\item{\code{pair}}{The perfect matching pair of this vertex.
+\item{\code{edge}}{The half-edge that starts at this vertex.
 print
 render an identifier for this object}
 }

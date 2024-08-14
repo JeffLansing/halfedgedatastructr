@@ -16,7 +16,7 @@ Face R6 Class
 \item{\code{rot}}{Rotation of this face:
 0 = 0 = 2\emph{pi, 1 = pi/2, 2 = pi, 3 = 3}pi/2.}
 
-\item{\code{normal}}{The normal to this face: x,y,z coordinates.}
+\item{\code{center}}{The center of this face: x,y,z coordinates.}
 
 \item{\code{edge}}{The starting edge for traversing the perimeter of this face.
 print
