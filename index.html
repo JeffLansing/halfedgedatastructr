@@ -93,13 +93,18 @@
 <h2 id="spanning-trees">Spanning Trees<a class="anchor" aria-label="anchor" href="#spanning-trees"></a>
 </h2>
 <p>Generating spanning trees for polygons is a somewhat guarded art, and there doesn’t seem to be code for that in R. Fortunately <a href="https://doc.sagemath.org/html/en/reference/graphs/sage/graphs/spanning_tree.html#sage.graphs.spanning_tree.spanning_trees" class="external-link">SAGE</a> provides help for this. The following SAGE code (easily extended to other polygons) generates all (and only) the spanning trees for the tetrahedron:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tet <span class="op">=</span> graphs.TetrahedralGraph()</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>tet.relabel({<span class="dv">0</span>:<span class="dv">1</span>, <span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">2</span>:<span class="dv">3</span>, <span class="dv">3</span>:<span class="dv">4</span>})</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>tst <span class="op">=</span> tet.spanning_trees()</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>reps <span class="op">=</span> []</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="cf">for</span> i,t <span class="kw">in</span> <span class="bu">enumerate</span>(tst):</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    reps.append(t.graph6_string())</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="bu">print</span>(<span class="op">*</span>reps, sep <span class="op">=</span> <span class="st">"', '"</span>)</span></code></pre></div>
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js" data-external="1"></script><script>sagecell.makeSagecell({"inputLocation": ".sage"});</script><link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css" data-external="1">
+<div class="sage">
+<script type="text/x-sage">
+tet = graphs.TetrahedralGraph()
+tet.relabel({0:1, 1:2, 2:3, 3:4})
+tst = tet.spanning_trees()
+reps = []
+for i,t in enumerate(tst):
+    reps.append(t.graph6_string())
+print(*reps, sep = ", ")
+  </script>
+</div>
 <p>The output of the code is this vector of 16 graph6-encoded trees:</p>
 <table class="table">
 <colgroup>
@@ -140,7 +145,7 @@
 </tr></tbody>
 </table>
 <p>which can be converted to the required adjacency matrix form, to then be used by the cut and fold operations:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adj_mats</span> <span class="op">&lt;-</span> <span class="fu">rgraph6</span><span class="fu">::</span><span class="fu"><a href="http://mbojan.github.io/rgraph6/reference/from_graph6.html" class="external-link">adjacency_from_graph6</a></span><span class="op">(</span><span class="va">trees</span><span class="op">)</span></span>
 <span><span class="va">he_ds</span><span class="op">$</span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="va">adj_mats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
@@ -148,8 +153,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">hes</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">hes</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">cut</span>, <span class="va">hes</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">ix</span>, <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">he_ds2</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/HalfEdgeDataStructure.html">HalfEdgeDataStructure</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">tet</span><span class="op">)</span></span>
 <span><span class="va">he_ds2</span><span class="op">$</span><span class="va">fold</span> <span class="op">&lt;-</span> <span class="va">adj_mats</span><span class="op">[[</span><span class="fl">16</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
@@ -157,7 +162,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">hes2</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">hes2</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">cut</span>, <span class="va">hes2</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">ix</span>, <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="do">##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">##  [1]  NA  NA  NA  NA  NA  NA 304 403 104 401 204 402</span></span></code></pre></div>
 <p>So cutting with tree 1 is the same as folding with tree 16.</p>
 <p>This duality will be explored further in one of the vignettes.</p>
 </div>
@@ -165,7 +170,7 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of halfedgedatastructr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"JeffLansing/halfedgedatastructr"</span><span class="op">)</span></span></code></pre></div>
 </div>

@@ -1,50 +1,49 @@
-<svg version="1.1" baseProfile="full" width="914.0" height="354.0" viewBox="0 0 914 354" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<svg version="1.1" baseProfile="full" width="910.0" height="354.0" viewBox="0 0 910 354" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
 	<desc >[&lt;frame&gt;HalfEdgeDataStructure provided structure|
-	  [HalfEdgeDataStructure|
-	    - faces : face \[ 0..* \]
-	    - vertices : vertex \[ 0..* \]
-	    - half_edges : half_edge \[ 0..* \]
-	    - he_index : int \[\]\[\] 
-	    - he_face_index : int \[\]\[\]|
-	    initialize()
-	    cut()
-	    fold()
-	  ]
-	 [HalfEdge|
-	  	- id : int
-	    - vertices : int \[ 0..* \]
-	    - dir : int
-	    - vert = Vertex
-	    - pair = HalfEdge
-	    - face = Face
-	    - succ = HalfEdge
-	    - cut : bool|
-	    print()
-	  ]
-	   [Vertex|
-	  	- id : int
-	    - point : num \[ 3 \]
-	    - edge : HalfEdge |
-	    print()
-	  ]
-	  [Face|
-	    - normal : num \[ 3 \]
-	    - edge : HalfEdge
-	    - rot : int |
-	    print()
-	  ]
-	]
-	</desc>
+		  [HalfEdgeDataStructure|
+		    - faces : face \[ 0..* \]
+		    - vertices : vertex \[ 0..* \]
+		    - half_edges : half_edge \[ 0..* \]
+		    - he_index : int \[\]\[\] 
+		    - he_face_index : int \[\]\[\]|
+		    initialize()
+		    cut()
+		    fold()
+		  ]
+		 [HalfEdge|
+		  	- id : int
+		    - vertices : int \[ 0..* \]
+		    - dir : int
+		    - vert = Vertex
+		    - pair = HalfEdge
+		    - face = Face
+		    - succ = HalfEdge
+		    - cut : bool|
+		    print()
+		  ]
+		   [Vertex|
+		  	- id : int
+		    - point : num \[ 3 \]
+		    - edge : HalfEdge |
+		    print()
+		  ]
+		  [Face|
+		    - center : num \[ 3 \]
+		    - edge : HalfEdge
+		    - rot : int |
+		    print()
+		  ]
+		]</desc>
 	<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
 		<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
 			<g stroke="transparent" fill="transparent">
-				<rect x="0.0" y="0.0" height="354.0" width="914.0" stroke="none"></rect>
+				<rect x="0.0" y="0.0" height="354.0" width="910.0" stroke="none"></rect>
 			</g>
 			<g transform="translate(8, 8)" fill="#33322E">
 				<g transform="translate(20, 20)">
 					<g data-name="HalfEdgeDataStructure provided structure">
 						<g fill="#eee8d5" stroke="#33322E" data-name="HalfEdgeDataStructure provided structure">
-							<rect x="0.0" y="0.0" height="298.0" width="858.0" data-name="HalfEdgeDataStructure provided structure"></rect>
+							<rect x="0.0" y="0.0" height="298.0" width="854.0" data-name="HalfEdgeDataStructure provided structure"></rect>
 							<path d="M0.0 32.0 L329.0 32.0 L345.0 16.0 L345.0 0.0" fill="none" data-name="HalfEdgeDataStructure provided structure"></path>
 						</g>
 						<g transform="translate(0, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="HalfEdgeDataStructure provided structure">
@@ -148,19 +147,19 @@
 									</g>
 									<g data-name="Face">
 										<g fill="#fdf6e3" stroke="#33322E" data-name="Face">
-											<rect x="652.0" y="40.5" height="129.0" width="150.0" data-name="Face"></rect>
-											<path d="M652.0 72.5 L802.0 72.5" fill="none" data-name="Face"></path>
-											<path d="M652.0 137.5 L802.0 137.5" fill="none" data-name="Face"></path>
+											<rect x="652.0" y="40.5" height="129.0" width="146.0" data-name="Face"></rect>
+											<path d="M652.0 72.5 L798.0 72.5" fill="none" data-name="Face"></path>
+											<path d="M652.0 137.5 L798.0 137.5" fill="none" data-name="Face"></path>
 										</g>
 										<g transform="translate(652, 40.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Face">
 											<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Face">
-												<text x="67.0" y="14.1" stroke="none" text-anchor="middle" data-name="Face">Face</text>
+												<text x="65.0" y="14.1" stroke="none" text-anchor="middle" data-name="Face">Face</text>
 												
 											</g>
 										</g>
 										<g transform="translate(652, 72.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Face">
 											<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Face">
-												<text x="0.0" y="14.1" stroke="none" data-name="Face">- normal : num [ 3 ]</text>
+												<text x="0.0" y="14.1" stroke="none" data-name="Face">- center : num [ 3 ]</text>
 												<text x="0.0" y="30.3" stroke="none" data-name="Face">- edge : HalfEdge</text>
 												<text x="0.0" y="46.5" stroke="none" data-name="Face">- rot : int</text>
 												
