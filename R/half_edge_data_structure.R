@@ -246,7 +246,7 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         rotated <- self$rotate(points, facet$normal, facet$center) %>% zapsmall()
         angles <- c()
         center <- colMeans(rotated)
-        face$center <- center
+        face$center <- facet$center
         for(i in 1:NFVS) {
           point <- rotated[i,]
           angle <- self$get_angle(center, point)

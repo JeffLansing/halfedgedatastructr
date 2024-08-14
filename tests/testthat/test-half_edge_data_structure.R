@@ -57,7 +57,7 @@ test_that("face center has content", {
     face <- he_ds$faces[[k]]
     face$center
   }))
-  expect_equal(ncol(tbl), 3)
+  expect_equal(colMeans(tbl), c(0.5, 0.5, 0.5))
 })
 
 test_that("iterate_around_face works", {
