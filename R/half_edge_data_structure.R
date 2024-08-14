@@ -59,8 +59,8 @@ Face <- R6Class("Face", list(
   #' @field rot Rotation of this face:
   #' 0 = 0 = 2*pi, 1 = pi/2, 2 = pi, 3 = 3*pi/2.
   rot = 0,
-  #' @field normal The normal to this face: x,y,z coordinates.
-  normal = NULL,
+  #' @field center The center of this face: x,y,z coordinates.
+  center = NULL,
   #' @field edge The starting edge for traversing the perimeter of this face.
   edge = NULL,
   #' print
@@ -239,7 +239,6 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         face <- Face$new()
         face$ix <- k
         facet <- hull$facets[[k]]
-        Face$normal <- facet$normal
         NFVS <- length(facet$vertices)
         points <- Reduce(rbind,lapply(1:NFVS, function(k) {
           hull$vertices[[facet$vertices[k]]]$point
@@ -247,6 +246,7 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         rotated <- self$rotate(points, facet$normal, facet$center) %>% zapsmall()
         angles <- c()
         center <- colMeans(rotated)
+        Face$center <- center
         for(i in 1:NFVS) {
           point <- rotated[i,]
           angle <- self$get_angle(center, point)
@@ -338,7 +338,7 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         }
       },
       #' @field cut
-      #' Requires a spanning tree of the hull in adjacency list form.
+      #' Requires a spanning tree of the dualhull in adjacency list form.
       #'
       cut = function(tree) {
         if (missing(tree)) {

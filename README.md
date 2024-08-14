@@ -73,15 +73,20 @@ provides help for this. The following SAGE code (easily extended to
 other polygons) generates all (and only) the spanning trees for the
 tetrahedron:
 
-``` python
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js" data-external="1"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+<link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css"  data-external="1">
+<div class="sage">
+  <script type="text/x-sage">
 tet = graphs.TetrahedralGraph()
 tet.relabel({0:1, 1:2, 2:3, 3:4})
 tst = tet.spanning_trees()
 reps = []
 for i,t in enumerate(tst):
     reps.append(t.graph6_string())
-print(*reps, sep = "', '")
-```
+print(*reps, sep = ", ")
+  </script>
+</div>
 
 The output of the code is this vector of 16 graph6-encoded trees:
 
