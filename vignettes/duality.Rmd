@@ -21,6 +21,9 @@ library(kableExtra)
 library(magrittr)
 library(stringr)
 library(cxhull)
+options(rgl.useNULL = TRUE) # Suppress the separate window.
+library(rgl)
+rgl::setupKnitr(autoprint = TRUE)
 ```
 
 ## Introduction
@@ -76,6 +79,12 @@ c(length(cu$vertices), length(cu$faces))
 
 oc <- HalfEdgeDataStructure$new(oct)
 c(length(oc$vertices), length(oc$faces))
+```
+
+The following figure shows these two structures in a somewhat simplified form.
+
+```{r echo=FALSE}
+list(cu, oc) %>% display_hes(c(1,2), special = TRUE)
 ```
 
 ## References
