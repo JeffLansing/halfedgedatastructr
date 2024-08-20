@@ -1,0 +1,81 @@
+---
+title: "Duality"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Duality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: vignettes.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+library(halfedgedatastructr)
+library(kableExtra)
+library(magrittr)
+library(stringr)
+library(cxhull)
+```
+
+## Introduction
+
+> "Duality in mathematics is not a theorem, but a “principle”. It has a
+> simple origin, it is very powerful and useful, and has a long history going
+> back hundreds of years. ...
+> Fundamentally, duality gives *two different points of view of looking at
+> the same object*. There are many things that have two different points
+> of view and in principle they are all dualities."
+-@atiyah2007duality
+
+In this vignette we begin to explore how the half-edge data structure exposes different sorts of duality, via the *cut* and *fold* operations:
+* The duality between a polytope and its geometric dual,
+* The duality between the the *cut* and *fold* operations, and
+* The duality between two kinds of operations involving half-edge data structures.
+
+## Preliminaries
+
+We will be careful to choose very specific data to work with in this vignette. 
+This is a limitation in that we won't know how the results that we see here might generalize to other cases, and it is a freedom in so far as we know exactly what assumptions we are relying on. For example, in this vignette we only consider a very particular cube, and its dual octahedron. The coordinates of this cube are based on the binary representation of the integers from 0 t0 7, translated to be centered on the origin, and ordered so that the dual cube of the dual octahedron is oriented the same way as the cube itself is.
+
+```{r}
+dim = 3
+len <- 2**dim
+nodes <- Reduce(rbind, lapply(0:(len - 1), function(k) {
+  b <- str_sub(paste(rev(as.integer(intToBits(k))), collapse = ""), -dim)
+  b %>% strsplit(split = "") %>% unlist() %>% as.numeric()
+})) %>% `rownames<-`(NULL)
+
+points <- ((nodes[c(4,8,3,7,6,2,1,5),] - colMeans(nodes)) *2) %>% 
+  `colnames<-`(letters[24:26])
+```
+```{r echo = FALSE}
+data.frame(points) %>% kbl() %>% kable_styling(bootstrap_options = c("condensed"), full_width = F)
+```
+
+We will also use some external tools to calculate some of the data used in the vignette. These are [Sage](https://www.sagemath.org/) and [GAP](https://www.gap-system.org/), which will be accessed using [Sage Cells](https://sagecell.sagemath.org/). To run the code shown in any Sage Cell, click the *Evaluate* button below the cell.
+
+First we use the [cxhull](https://cran.r-project.org/package=cxhull) pachage to create a cube and its dual octahedron, which we then use as inputs to *HalfEdgeDataStructure$new()*.
+
+```{r}
+cube <- points %>% cxhull()
+# The copoints are the centers of the faces of the cube:
+copoints <- Reduce(rbind, lapply(1:6, function(k) {cube[["facets"]][[k]]$center})) %>% 
+  `rownames<-`(NULL) %>% `colnames<-`(letters[24:26])
+# The octahedron is made with the copoints:
+oct <- copoints %>% cxhull()
+```
+```{r}
+cu <- HalfEdgeDataStructure$new(cube)
+c(length(cu$vertices), length(cu$faces))
+
+oc <- HalfEdgeDataStructure$new(oct)
+c(length(oc$vertices), length(oc$faces))
+```
+
+## References

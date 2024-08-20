@@ -338,7 +338,7 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         }
       },
       #' @field cut
-      #' Requires a spanning tree of the dualhull in adjacency list form.
+      #' Requires a spanning tree of the dual hull in adjacency list form.
       #'
       cut = function(tree) {
         if (missing(tree)) {

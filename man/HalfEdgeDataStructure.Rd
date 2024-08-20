@@ -72,7 +72,7 @@ Just dot with the new x and new y unit vectors and you get a pair (x,y).}
 
 \item{\code{he_face_index}}{An index of the half-edges by pairs of face ids (as a matrix).}
 
-\item{\code{cut}}{Requires a spanning tree of the dualhull in adjacency list form.}
+\item{\code{cut}}{Requires a spanning tree of the dual hull in adjacency list form.}
 
 \item{\code{fold}}{Requires a spanning tree of the dual of hull in adjacency list form.}
 }
