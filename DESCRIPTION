@@ -1,6 +1,6 @@
 Package: halfedgedatastructr
 Title: Provide a half-edge data structure for a convex polytope
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: 
     person("Jeff", "Lansing", , "lansing2357@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
@@ -25,6 +25,7 @@ Suggests:
     knitr,
     rmarkdown,
     kableExtra,
-    cxhull
+    cxhull,
+    rgl
 Config/testthat/edition: 3
 VignetteBuilder: knitr
