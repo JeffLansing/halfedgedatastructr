@@ -75,7 +75,7 @@ oct <- copoints %>% cxhull()
 ```
 ```{r}
 cu <- HalfEdgeDataStructure$new(cube)
-c(length(cu$vertices), length(cu$faces))
+c(length(cu$vertices), length(cu$faces)) 
 
 oc <- HalfEdgeDataStructure$new(oct)
 c(length(oc$vertices), length(oc$faces))
@@ -83,8 +83,9 @@ c(length(oc$vertices), length(oc$faces))
 
 The following figure shows these two structures in a somewhat simplified form.
 
-```{r echo=FALSE}
+```{r display1, fig.cap=c("Figure 1.cube and octahedron", fig.align = 'right', echo=FALSE)}
 list(cu, oc) %>% display_hes(c(1,2), special = TRUE)
+rglwidget()
 ```
 
 ## References

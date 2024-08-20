@@ -88,13 +88,13 @@ get_display_info <- function(info) {
 #' @param special a boolean indicating whether to show simplified view,
 #' without cut and fold information.
 #'
-#' @return
+#' @return Nothing is returned from this function.
 #' @export
 #'
 #' @examples
 #'
 display_hes <- function(hes, rc, shared = FALSE, special = FALSE) {
-  open3d(windowRect = c(50, 50, 750, 350 * rc[1]))
+  open3d(windowRect = c(10, 100, 750, 350 * rc[1]))
   view3d(20, 10, zoom = 0.85)
   par3d(font = 2, FOV = 10) #0 is isomorphic view
   material3d(color = 'white', alpha = 0.1)
