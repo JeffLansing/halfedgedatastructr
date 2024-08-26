@@ -187,7 +187,7 @@ Some things to notice in Figure 3 are:
 
 * What is this number 299?.
 
-To explore the *cut/fold* duality further, it will be helpful to have some information about all (374 *2) of *the spanning trees that we have so far. In the *he_ds_helpers.R* file, there is a handy tool *hull_plus_g6* that treats the half-edge data structure as an arithmetic operator on the indices of the spanning trees.
+To explore the *cut/fold* duality further, it will be helpful to have some information about all ($374 \times 2$) of *the spanning trees that we have so far. In the *he_ds_helpers.R* file, there is a handy tool *hull_plus_g6* that treats the half-edge data structure as an arithmetic operator on the indices of the spanning trees.
 First we apply it to 299.
 
 ```{r}

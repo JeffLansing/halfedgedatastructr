@@ -126,4 +126,7 @@ You can install the development version of halfedgedatastructr from [GitHub](htt
 # install.packages("devtools")
 devtools::install_github("JeffLansing/halfedgedatastructr")
 ```
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/JeffLansing/halfedgedatastructr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JeffLansing/halfedgedatastructr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
