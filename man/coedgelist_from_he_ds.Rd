@@ -23,3 +23,7 @@ Produce an extended edgelist from the information in a
 half-edge data structure, but using the 'virtual' edges between faces
 instead of the actual edges between vertices.
 }
+\examples{
+coedgelist_from_he_ds(list(half_edges = c()))
+
+}

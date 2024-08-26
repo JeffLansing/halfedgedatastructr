@@ -21,3 +21,7 @@ edgelist_from_he_ds
 Produce an extended edgelist from the information in a
 half-edge data structure
 }
+\examples{
+edgelist_from_he_ds(list(half_edges = c()))
+
+}

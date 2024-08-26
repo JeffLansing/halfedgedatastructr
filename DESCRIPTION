@@ -1,5 +1,5 @@
 Package: halfedgedatastructr
-Title: Provide a half-edge data structure for a convex polytope
+Title: Provide a half-edge data structure for a 3d convex polytope
 Version: 0.0.0.9003
 Authors@R: 
     person("Jeff", "Lansing", , "lansing2357@gmail.com", role = c("aut", "cre"),
@@ -26,6 +26,10 @@ Suggests:
     rmarkdown,
     kableExtra,
     cxhull,
-    rgl
+    rgl (>= 1.3.0),
+    permutations
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+LazyData: true

@@ -6,6 +6,16 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: vignettes.bib
+figures:
+  dpi: 192
+  dev.args: []
+  fig.ext: png
+  fig.width: 7
+  fig.height: ~
+  fig.retina: 2
+  other.parameters:
+    rgl:
+      fig.asp: 1
 ---
 
 ```{r, include = FALSE}
@@ -20,9 +30,11 @@ library(halfedgedatastructr)
 library(kableExtra)
 library(magrittr)
 library(stringr)
+library(rgraph6)
 library(cxhull)
-options(rgl.useNULL = TRUE) # Suppress the separate window.
-library(rgl)
+# options(rgl.useNULL = TRUE) # Suppress the separate window.
+# library(rgl)
+source("./rgl_setup.R")
 rgl::setupKnitr(autoprint = TRUE)
 ```
 
@@ -37,14 +49,17 @@ rgl::setupKnitr(autoprint = TRUE)
 -@atiyah2007duality
 
 In this vignette we begin to explore how the half-edge data structure exposes different sorts of duality, via the *cut* and *fold* operations:
+
 * The duality between a polytope and its geometric dual,
+
 * The duality between the the *cut* and *fold* operations, and
-* The duality between two kinds of operations involving half-edge data structures.
+
+* The duality between two kinds of operations on polytopes.
 
 ## Preliminaries
 
 We will be careful to choose very specific data to work with in this vignette. 
-This is a limitation in that we won't know how the results that we see here might generalize to other cases, and it is a freedom in so far as we know exactly what assumptions we are relying on. For example, in this vignette we only consider a very particular cube, and its dual octahedron. The coordinates of this cube are based on the binary representation of the integers from 0 t0 7, translated to be centered on the origin, and ordered so that the dual cube of the dual octahedron is oriented the same way as the cube itself is.
+This is a limitation in that we won't know how the results that we see here might generalize to other cases, and it is a freedom in so far as we know exactly what assumptions we are relying on. For example, in this vignette we only consider a very particular cube, and its dual octahedron. The coordinates of this cube are based on the binary representation of the integers from 0 t0 7, translated to be centered on the origin, and ordered so that the dual cube of the dual octahedron is oriented the same way as the cube itself is.^[In Figure 1, the outer cube on the left has the same orientation as the inner cube on the right. This is not an accident.] These will be our polytopes.
 
 ```{r}
 dim = 3
@@ -81,11 +96,194 @@ oc <- HalfEdgeDataStructure$new(oct)
 c(length(oc$vertices), length(oc$faces))
 ```
 
-The following figure shows these two structures in a somewhat simplified form.
+The following figure shows these two structures in a somewhat simplified form.^[Note that the R code for the display function, together with a few other helper functions, in contained in the file *he_ds_helpers.R*.]
 
-```{r display1, fig.cap=c("Figure 1.cube and octahedron", fig.align = 'right', echo=FALSE)}
+```{r display1, fig.cap=c("Figure 1. cube and octahedron"), fig.height=3, fig.width=5}
 list(cu, oc) %>% display_hes(c(1,2), special = TRUE)
-rglwidget()
+
 ```
+Next we would like to generate the spanning trees for these two objects.
+We use the [graph6 representation](https://users.cecs.anu.edu.au/~bdm/data/formats.txt) as a convenient portable format that we can pass to Sage. These somewhat bulky lists are also stored as data in the *halfedgedatastr* package.^[Their names are *cube_span_trees*"* and *oct_span_trees*.]
+
+```{r}
+cu_am <- cu %>% edgelist_from_he_ds() %>% `[`(, c(7:8)) %>% 
+  edgelist_to_adjmat()
+oc_am <- oc %>% edgelist_from_he_ds() %>% `[`(, c(7:8)) %>% 
+  edgelist_to_adjmat()
+cu_am %>% as_graph6()
+oc_am %>%  as_graph6()
+```
+
+Now we can use the graph6 representations of the cube and otahedron in order to use Sage to get the spanning trees (also in graph6). There are 384 of each of them, as expected from Kirchhoff's matrix-tree theorem.
+
+```{=html}
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js" data-external="1"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+<link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css"  data-external="1">
+<div class="sage">
+  <script type="text/x-sage">
+cube = Graph("GrQHGs")
+cst = cube.spanning_trees()
+reps = []
+for i,t in enumerate(cst):
+    reps.append(t.graph6_string())
+print(*reps, sep = "', '")
+  </script>
+</div>
+```
+```{=html}
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js" data-external="1"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+<link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css"  data-external="1">
+<div class="sage">
+  <script type="text/x-sage">
+cube = Graph("E}lw")
+cst = cube.spanning_trees()
+reps = []
+for i,t in enumerate(cst):
+    reps.append(t.graph6_string())
+print(*reps, sep = "', '")
+  </script>
+</div>
+```
+
+## Cut and Fold
+
+In this section we want to look at the 384 (times 2) spanning trees that we produced in the previous section. We start with the first one.
+
+```{r display2, fig.cap=c("Figure 2. cut cube and folded octahedron"), fig.height=3, fig.width=5}
+cu <- HalfEdgeDataStructure$new(cube)
+cu$cut <- cube_span_trees[,,1]
+
+oc <- HalfEdgeDataStructure$new(oct)
+oc$fold <- cube_span_trees[,,1]
+
+list(cu, oc) %>% display_hes(c(1,2))
+```
+
+Some things to notice in this figure are:
+
+* On the left there is a black tree with 8 vertices, on the 'outside', and a
+red tree with 6 vertices on the 'inside'.
+
+* On the right there is a black tree with 6 vertices, on the 'outside', and a
+red tree with 8 vertices on the 'inside'.
+
+* Abstractly (i.e., ignoring the types of the vertices) the 'outer' tree on the left is the same as the 'inner' tree on the right, and vice versa.
+
+All of this seems expected, and not very interesting. Somewhat more interesting is the following situation, where we look at two different spanning trees.
+
+```{r display3, fig.cap=c("Figure 3. two cubes, one cut and one folded"), fig.height=3, fig.width=5}
+cu <- HalfEdgeDataStructure$new(cube)
+cu$cut <- cube_span_trees[,,1]
+
+cu2 <- HalfEdgeDataStructure$new(cube)
+cu2$fold <- oct_span_trees[,,299]
+
+list(cu, cu2) %>% display_hes(c(1,2))
+```
+
+Some things to notice in Figure 3 are:
+
+* The object on the left and the object on the right are the same, and not just abstractly the same.
+
+* What is this number 299?.
+
+To explore the *cut/fold* duality further, it will be helpful to have some information about all (374 *2) of *the spanning trees that we have so far. In the *he_ds_helpers.R* file, there is a handy tool *hull_plus_g6* that treats the half-edge data structure as an arithmetic operator on the indices of the spanning trees.
+First we apply it to 299.
+
+```{r}
+# Get all the spanning trees as graph6:
+cstg6 <- cube_span_trees %>% apply(3, as_graph6)
+ostg6 <- oct_span_trees %>% apply(3, as_graph6)
+
+# Look up elements of a list of g6's in the g6-encoded spanning trees:
+decode <- function(g6s) {
+  lapply(g6s, function(g6) {
+    c(which(cstg6 == g6), which(ostg6 == g6))
+  }) %>% unlist()
+}
+
+# Try out the 4 combinations of the hull_plus_g6 function, for 299
+k <- 299
+opk <- rbind(
+  hull_plus_g6(cstg6[k], cube),
+  hull_plus_g6(cstg6[k], oct),
+  hull_plus_g6(ostg6[k], cube),
+  hull_plus_g6(ostg6[k], oct)
+)
+opk
+
+# Do the look up:
+opk %>% apply(1, decode)
+```
+Abstract, this looks something like what happens in arithmetic:
+
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+tabl <- "
+| Plus |      |  | Minus  |
+|-----|:-----:|----:|----:|
+|  x  | x+u   | x-u |  x  |
+| x+u |  x    |  x  | x-u |
+"
+cat(tabl) 
+```
+So let's explore a little farther. Can we find something like behaves like *u* in the table above?
+```{r}
+# get the cube and the cube spanning trees together
+cube_ixs <- Reduce(rbind, lapply(1:384, function(k) {
+  cstg6[k] %>% hull_plus_g6(cube) %>%  decode()
+})) 
+
+# see a short part of them
+cube_ixs %>% head(16) %>% t()
+
+# regard them as a permutation of the first 384 integers
+pm <- cube_ixs[,2] %>% as.integer() %>% permutations::as.word() %>% 
+  permutations::as.cycle()
+# what is the structure of that permutation?
+permutations::shape(pm)
+
+# separate the cycles
+els <- permutations::get1(pm,drop=TRUE)
+cyc1 <- permutations::get_cyc(pm,els[1]) %>% unlist()
+cyc2 <- permutations::get_cyc(pm,els[2]) %>% unlist()
+
+# Convert the first cycle to a function:
+cyc1f <- permutations::get_cyc(pm,els[1]) %>% as.function()
+
+# and apply that function to the element 1
+cyc1f(1)
+
+# Invert the first cycle and convert it to a function:
+cyc1mf <- permutations::get_cyc(pm,els[1]) %>% 
+  permutations::inverse() %>% as.function()
+
+# Apply the inverse function to the element 299
+cyc1mf(299)
+```
+
+We see that *299* is the result of applying the first cycle of the permutation to the element *1*. So *unit* means apply the permutation *once*. Also, we see that *minus* means invert the permutation.
+
+Next we look at permutation is more detail.
+
+```{r}
+# show them
+cyc1
+cyc2
+
+```
+For illustration, we can show the effect of the second cycle on the cube.
+
+```{r display4, fig.cap=c("Figure 4. twelve cubes which are selected by the 2nd cycle"), fig.height=5, fig.width=7}
+lapply(cyc2, function(k) {
+  cu <- HalfEdgeDataStructure$new(cube)
+  cu$cut <- cube_span_trees[,,k]
+  cu
+}) %>% display_hes(c(3,4), shared = TRUE)
+```
+
+What is interesting here?
+
 
 ## References

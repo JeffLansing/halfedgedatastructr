@@ -1,6 +1,4 @@
 library(magrittr)
-library(rgl)
-
 
 #' edgelist_from_he_ds
 #' Produce an extended edgelist from the information in a
@@ -14,6 +12,7 @@ library(rgl)
 #' @export
 #'
 #' @examples
+#' edgelist_from_he_ds(list(half_edges = c()))
 #'
 edgelist_from_he_ds <- function(he_ds) {
   pairs <- Reduce(rbind, lapply(he_ds$half_edges, function(e) {
@@ -39,6 +38,7 @@ edgelist_from_he_ds <- function(he_ds) {
 #' @export
 #'
 #' @examples
+#' coedgelist_from_he_ds(list(half_edges = c()))
 #'
 coedgelist_from_he_ds <- function(he_ds) {
   pairs <- Reduce(rbind, lapply(he_ds$half_edges, function(e) {
@@ -54,71 +54,86 @@ coedgelist_from_he_ds <- function(he_ds) {
   pairs %>% `rownames<-`(NULL)
 }
 
-#' get_display_info
-#' Process an edgelist to assemple the information into a
-#' format amenible to rgl.
+#' edgelist_to_adjmat
+#' Convert an edgelist to an adjacency matrix.
+#' The edgelist is treated as an index array for the
+#' desired matrix.
 #'
-#' @param info Either an extended edgelist or a coedgelist
+#' @param edgelist An n X 2 matrix of edges of a graph
+#' @param dim Optional help for deciding the dimension of
+#' the result; defaults to the largest value in the edgelist
 #'
-#' @return A list of the extracted info
+#' @return The adjacency matrix of the graph
 #' @export
 #'
 #' @examples
+#' elist <- rbind(c(1,4), c(2,4), c(3,4))
+#' edgelist_to_adjmat(elist)
 #'
-get_display_info <- function(info) {
-  ct <- which(info[,9] == 1)
-  fd <- which(info[,9] == 0)
-  vsc <- info[ct,1:6] %>% t() %>% as.numeric() %>%
-    matrix(byrow = TRUE, ncol = 3)
-  vsf <- info[fd,1:6] %>% t() %>% as.numeric() %>%
-    matrix(byrow = TRUE, ncol = 3)
-  vs <- info[,1:6] %>% t() %>% as.numeric() %>%
-    matrix(byrow = TRUE, ncol = 3)
-  ts <- info[,7:8] %>% t() %>% as.numeric() %>%
-    matrix(byrow = TRUE, ncol = 1)
-  list(vsc = vsc, vsf = vsf, vs = vs, ts = ts)
+edgelist_to_adjmat <- function(edgelist, dim = NULL) {
+  if(is.null(dim)) {
+    dim <- max(edgelist)
+  }
+  mx <- matrix(0,dim,dim)
+  mx[edgelist] <- 1
+  mx[edgelist[,c(2,1)]] <- 1
+  mx
 }
 
-#' display_hes
-#' Display half-edge data structures with rgl.
+#' adjmats_from_info
 #'
-#' @param hes A list of half-edge data structures
-#' @param rc The number of rows and columns in the displayl r * c = length(hes)
-#' @param shared Whether the rgl mouse interactions are shared or not
-#' @param special a boolean indicating whether to show simplified view,
-#' without cut and fold information.
+#' @param info Either an edgeinfo or a coedgeinfo data structure
 #'
-#' @return Nothing is returned from this function.
+#' @return Two adjacency matrices that are extracted from the info
+#' structure, one for the cut edges and one for the fold edges.
 #' @export
 #'
 #' @examples
+#' info <- rbind(c(0,0,0,1,1,1,1,2,1),c(1,1,1,0,0,0,2,1,0))
+#' adjmats_from_info(info)
 #'
-display_hes <- function(hes, rc, shared = FALSE, special = FALSE) {
-  open3d(windowRect = c(10, 100, 750, 350 * rc[1]))
-  view3d(20, 10, zoom = 0.85)
-  par3d(font = 2, FOV = 10) #0 is isomorphic view
-  material3d(color = 'white', alpha = 0.1)
-  mfrow3d(rc[1], rc[2], sharedMouse = shared)
-  for(i in 1:length(hes)) {
-    he <- hes[[i]]
-    einfo <- he %>% edgelist_from_he_ds() %>% get_display_info()
-    cinfo <- he %>% coedgelist_from_he_ds() %>% get_display_info()
-    next3d()   # won't advance the first time, since it is empty
-    bgplot3d({
-      plot.new()
-    })
-    if(special) {
-      segments3d(einfo$vs, col="black", lwd=1)
-      segments3d(cinfo$vs, col="red", lwd=1)
-    } else {
-      segments3d(einfo$vsc, col="black", lwd=1)
-      segments3d(einfo$vsf, col="yellow", lwd=1)
-      segments3d(cinfo$vsf, col="red", lwd=1)
-      segments3d(cinfo$vsc, col="lightblue", lwd=1)
-    }
-    text3d(einfo$vs, texts = str_c('v', einfo$ts), adj = 1.1)
-    text3d(cinfo$vs, texts = str_c('f', cinfo$ts), col="red", adj = 1.1)
-  }
-  highlevel(integer()) # To trigger display as rglwidget
+adjmats_from_info <- function(info) {
+  ct <- which(info[,9] == 1)
+  fd <- which(info[,9] == 0)
+  vsc <- info[ct,7:8] %>% t() %>% as.numeric() %>%
+    matrix(byrow = TRUE, ncol = 2)
+  vsf <- info[fd,7:8] %>% t() %>% as.numeric() %>%
+    matrix(byrow = TRUE, ncol = 2)
+  amc <- vsc %>% edgelist_to_adjmat()
+  amf <- vsf %>% edgelist_to_adjmat()
+  list(amc = amc, amf = amf)
 }
+
+#' hull_plus_g6
+#' Treat the half-edge data structure as an arithmetic operator on
+#' the indices of the spanning trees
+#'
+#' @param g6 A spanning tree in g6 encoding
+#' @param hull A hull structure for a polyhedron
+#'
+#' @return Vector of 4 adjacency matrices in g6 encoding.
+#' Only 2 of them will be trees, and one of those trees will be
+#' identical to the input tree.
+#' @export
+#'
+hull_plus_g6 <- function(g6, hull) {
+  am <- rgraph6::adjacency_from_graph6(g6)[[1]]
+  he <- HalfEdgeDataStructure$new(hull)
+  # Match the sizes of the 2 input objects, and apply cut if
+  # they are the same, otherwise apply fold
+  if(nrow(am) == length(he$vertices)) {
+    he$cut <- am
+  } else {
+    he$fold <- am
+  }
+  # Return the results as a vector of named graph6 strings
+  el <- edgelist_from_he_ds(he) %>% adjmats_from_info() %>%
+    rgraph6::as_graph6()
+  coel <- coedgelist_from_he_ds(he) %>% adjmats_from_info() %>%
+    rgraph6::as_graph6()
+  c(el = el, coel = coel)
+}
+
+
+
 
