@@ -8,7 +8,7 @@
 An object of class \\code{list} of length 4:
 \describe{
 \item{elements}{An object of class \\code{matrix} (inherits from \\code{array}) with 48 rows and 8 columns}
-\item{names}{An object of class \\code{character} of length 4}
+\item{names}{An object of class \\code{character} of length 48}
 \item{perms}{An object of class \\code{character} of length 48}
 \item{matrices}{An object of class \\code{array} of dimension 6 x 6 x 48}
 }
