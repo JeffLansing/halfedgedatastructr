@@ -348,6 +348,9 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
         for(i in 1:nrow(elist)) {
           edge <- elist[i,]
           heix <- private$.he_index[edge[1], edge[2]]
+          if(is.na(heix)) {
+            next
+          }
           he <- private$.half_edges[[heix]]
           he$pair$cut <- TRUE
           he$cut <- TRUE
