@@ -2,6 +2,16 @@ library(magrittr)
 library(rgraph6)
 library(stringr)
 
+edgelist_to_adjmat <- function(edgelist, dim = NULL) {
+  if(is.null(dim)) {
+    dim <- max(edgelist)
+  }
+  mx <- matrix(0,dim,dim)
+  mx[edgelist] <- 1
+  mx[edgelist[,c(2,1)]] <- 1
+  mx
+}
+
 iterate_around_face <- function(face, spanning = FALSE) {
   hes <- list()
   he <- face$edge
