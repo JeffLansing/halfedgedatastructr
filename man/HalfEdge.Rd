@@ -21,11 +21,16 @@ HalfEdge R6 Class
 
 \item{\code{face}}{Face that the half-edge borders}
 
-\item{\code{succ}}{Next half-edge around the face}
-
-\item{\code{cut}}{Whether this half-edge is cut or not
+\item{\code{succ}}{Next half-edge around the face
 print
 render an identifier for this object}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{cut}}{Whether this half-edge is cut or not}
 }
 \if{html}{\out{</div>}}
 }
