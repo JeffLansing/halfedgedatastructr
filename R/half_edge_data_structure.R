@@ -337,6 +337,28 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
           stop("'$he_face_index' is read only", call. = FALSE)
         }
       },
+      #' @field cut_edge
+      #' Requires an index of a half_edge.
+      #'
+      cut_edge = function(heix) {
+        if (missing(heix)) {
+          stop("argument '$cut_edge' is missing, with no default", call. = FALSE)
+        }
+        he <- private$.half_edges[[heix]]
+        he$pair$cut <- TRUE
+        he$cut <- TRUE
+      },
+      #' @field uncut_edge
+      #' Requires an index of a half_edge.
+      #'
+      uncut_edge = function(heix) {
+        if (missing(heix)) {
+          stop("argument '$cut_edge' is missing, with no default", call. = FALSE)
+        }
+        he <- private$.half_edges[[heix]]
+        he$pair$cut <- FALSE
+        he$cut <- FALSE
+      },
       #' @field cut
       #' Requires a spanning tree of the dual hull in adjacency list form.
       #'
