@@ -16,8 +16,6 @@ HalfEdge <- R6Class("HalfEdge", list(
   face = NULL,
   #' @field succ Next half-edge around the face
   succ = NULL,
-  #' @field cut Whether this half-edge is cut or not
-  cut = FALSE,
   #' print
   #' render an identifier for this object
   #' @param ...
@@ -29,7 +27,23 @@ HalfEdge <- R6Class("HalfEdge", list(
     cat(str_c("e", self$vert$ix, ".", self$succ$vert$ix), "\n", sep = "")
     invisible(self)
   }
-))
+),
+private = list(
+  #' @field cut Whether this half-edge is cut or not
+  .cut = FALSE
+),
+ active = list(
+  cut = function(value) {
+    if (missing(value)) {
+      private$.cut
+    } else {
+      stopifnot(is.logical(value), length(value) == 1)
+      private$.cut <- value
+      self
+    }
+  }
+)
+)
 
 #' Vertex R6 Class
 Vertex <- R6Class("Vertex", list(
@@ -149,18 +163,28 @@ HalfEdgeDataStructure <- R6Class("HalfEdgeDataStructure",
     #' @return The corresponding edgelist for the same graph
     #'
     #'
-    adjmat_to_edgelist = function(adjmat) {
-    dim <- nrow(adjmat)
-    edgelist <- matrix(0, dim - 1, 2)
-    k <- 1
-    for ( i in 1:dim){
-      for ( j in i:dim) {
-        if(adjmat[i,j] == 0) next
-        edgelist[k,] <- c(i, j) %>% as.numeric()
-        k <-  k + 1
+    # adjmat_to_edgelist = function(adjmat) {
+    # dim <- nrow(adjmat)
+    # edgelist <- matrix(0, dim - 1, 2)
+    # k <- 1
+    # for ( i in 1:dim){
+    #   for ( j in i:dim) {
+    #     if(adjmat[i,j] == 0) next
+    #     edgelist[k,] <- c(i, j) %>% as.numeric()
+    #     k <-  k + 1
+    #  }
+    # }
+   adjmat_to_edgelist = function(adjmat) {
+     dim <- nrow(adjmat)
+     edges <- list()
+     for ( i in 1:dim){
+       for ( j in i:dim) {
+         if(adjmat[i,j] == 0) next
+         edges[[1 + length(edges)]] <- c(i, j) %>% as.numeric()
+       }
      }
-    }
-    edgelist
+     edgelist <- Reduce(rbind, edges) %>% `rownames<-`(NULL)
+     edgelist
     },
 
     #' initialize
